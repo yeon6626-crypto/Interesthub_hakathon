@@ -1,0 +1,139 @@
+.quest-board-page.landing {
+  color: #2f2418;
+}
+
+.quest-board-page .quest-board-panel {
+  width: min(900px, 100%);
+}
+
+.quest-board-tab {
+  padding: 0.5rem 1rem;
+  background: #4a7754;
+  color: #fff;
+  border: 2px solid #2f2418;
+  border-bottom: none;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.quest-board-content {
+  padding: 1.25rem;
+  border: 3px solid #2f2418;
+  background: #f5e6c8;
+  color: #2f2418;
+  overflow: visible;
+}
+
+.quest-board-page .landing-main {
+  overflow: visible;
+}
+
+.quest-board-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.quest-board-header h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #5c1f1f;
+}
+
+.quest-board-back {
+  padding: 0.45rem 0.85rem;
+  border: 2px solid #2f2418;
+  background: #e8dcc8;
+  color: #2f2418;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.quest-board-back:hover {
+  background: #fff8ea;
+}
+
+.quest-board-message,
+.quest-board-error {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #555;
+}
+
+.quest-board-error {
+  color: #8b1e1e;
+}
+
+.quest-board-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.quest-board-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem 1rem 1.1rem;
+  border: 2px solid #2f2418;
+  background: #fff8ea;
+  color: #2f2418;
+}
+
+.quest-board-card-body {
+  flex: 0 1 auto;
+}
+
+.quest-board-type {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #5c1f1f;
+}
+
+.quest-board-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #2f2418;
+  font-weight: normal;
+}
+
+.quest-board-reward {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #4a7754;
+}
+
+.quest-accept-btn {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0.55rem 0.75rem;
+  border: 2px solid #2f2418;
+  background: #4a7754;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.quest-accept-btn:disabled {
+  background: #999;
+  cursor: default;
+}
+
+.quest-accept-btn:not(:disabled):hover {
+  filter: brightness(1.05);
+}

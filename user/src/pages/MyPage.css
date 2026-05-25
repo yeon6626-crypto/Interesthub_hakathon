@@ -1,0 +1,111 @@
+.mypage-page .mypage-board {
+  width: min(560px, 100%);
+}
+
+.mypage-loading {
+  text-align: center;
+  color: #f5e6c8;
+  padding: 3rem;
+}
+
+.mypage-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  color: #5c1f1f;
+}
+
+.form-input-readonly {
+  background: #eee;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.form-success {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border: 2px solid #4a7754;
+  background: #e8f5e9;
+  color: #2f5a35;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.profile-dropdown-wrapper {
+  position: relative;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 220px;
+  background: #f5e6c8;
+  border: 3px solid #2f2418;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  z-index: 50;
+  overflow: hidden;
+}
+
+.profile-dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 2px solid #2f2418;
+  background: #e8dcc8;
+}
+
+.profile-dropdown-avatar {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #2f2418;
+  background: #fff;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.profile-dropdown-name {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #2f2418;
+}
+
+.profile-dropdown-email {
+  margin: 0.15rem 0 0;
+  font-size: 0.7rem;
+  color: #666;
+  word-break: break-all;
+}
+
+.profile-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-bottom: 1px solid #d4c4a8;
+  background: #f5e6c8;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  color: #2f2418;
+}
+
+.profile-dropdown-item:hover {
+  background: #fff8ea;
+}
+
+.profile-dropdown-logout {
+  border-bottom: none;
+  color: #8b1e1e;
+}
+
+.profile-dropdown-logout:hover {
+  background: #fde8e8;
+}

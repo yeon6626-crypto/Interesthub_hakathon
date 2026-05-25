@@ -1,0 +1,403 @@
+.gacha-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.gacha-modal,
+.card-detail-modal {
+  position: relative;
+  width: min(900px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem 1.75rem;
+  background: #f5e6c8;
+  border: 3px solid #2f2418;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.gacha-close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.9rem;
+  border: none;
+  background: transparent;
+  color: #2f2418;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gacha-modal-title {
+  margin: 0 0 0.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: #2f2418;
+}
+
+.gacha-modal-desc,
+.gacha-modal-cost {
+  margin: 0 0 0.35rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.gacha-error {
+  margin: 1rem 0 0;
+  padding: 0.65rem;
+  text-align: center;
+  background: #fde8e8;
+  border: 2px solid #8b1e1e;
+  color: #8b1e1e;
+  font-size: 0.9rem;
+}
+
+.gacha-acquire-banner {
+  margin: 1.25rem 0;
+  padding: 0.85rem 1rem;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  border: 3px solid #2f2418;
+  animation: bannerPop 0.4s ease;
+}
+
+.gacha-acquire-banner.rarity-common {
+  background: linear-gradient(90deg, #6b7280, #4b5563);
+}
+
+.gacha-acquire-banner.rarity-rare {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+}
+
+.gacha-acquire-banner.rarity-epic {
+  background: linear-gradient(90deg, #a855f7, #7c3aed);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+}
+
+.gacha-acquire-sparkle {
+  margin: 0 0.35rem;
+  animation: sparkle 0.6s ease infinite alternate;
+}
+
+@keyframes bannerPop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sparkle {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.gacha-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  perspective: 1000px;
+}
+
+.gacha-flip-card {
+  width: 100px;
+  height: 140px;
+  perspective: 600px;
+}
+
+.gacha-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.gacha-flip-card.revealed .gacha-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.gacha-flip-front,
+.gacha-flip-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  border: 3px solid #2f2418;
+  border-radius: 4px;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.gacha-flip-front {
+  background: linear-gradient(180deg, #4a5678 0%, #3b4766 100%);
+  color: #fff;
+}
+
+.gacha-card-back-icon {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.gacha-flip-back {
+  transform: rotateY(180deg);
+  background: #fff8ea;
+  color: #2f2418;
+}
+
+.gacha-flip-card.rarity-rare .gacha-flip-back {
+  border-color: #2563eb;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+}
+
+.gacha-flip-card.rarity-epic .gacha-flip-back {
+  border-color: #7c3aed;
+  box-shadow: 0 0 16px rgba(124, 58, 237, 0.5);
+  background: linear-gradient(180deg, #faf5ff 0%, #fff8ea 100%);
+}
+
+.gacha-card-icon {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.gacha-card-class {
+  font-size: 0.65rem;
+  color: #5c1f1f;
+}
+
+.gacha-card-title {
+  font-size: 0.7rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.gacha-result {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #2f2418;
+}
+
+.gacha-result p {
+  margin: 0 0 0.35rem;
+}
+
+.gacha-result-hint {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.gacha-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gacha-draw-btn {
+  padding: 0.9rem 1.5rem;
+  border: 3px solid #1a2238;
+  background: linear-gradient(180deg, #4a5678 0%, #3b4766 100%);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.gacha-draw-btn:hover {
+  background: linear-gradient(180deg, #55638a 0%, #445274 100%);
+}
+
+.gacha-secondary-btn {
+  padding: 0.6rem 1.25rem;
+  border: 2px solid #2f2418;
+  background: #e8dcc8;
+  cursor: pointer;
+  font: inherit;
+}
+
+.gacha-drawing-text {
+  margin: 0;
+  text-align: center;
+  color: #5c1f1f;
+  animation: pulse 0.8s ease infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.gacha-card-clickable {
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.gacha-card-clickable:hover {
+  transform: scale(1.03);
+}
+
+.collection-section h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  font-weight: normal;
+}
+
+.collection-desc {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+
+.collection-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  padding: 0.75rem;
+  border: 2px solid #2f2418;
+  background: #e8e8e8;
+  cursor: default;
+  font: inherit;
+  text-align: center;
+}
+
+.collection-slot.owned {
+  background: #fff8ea;
+  cursor: pointer;
+}
+
+.collection-slot.owned:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.collection-slot.rarity-rare.owned {
+  border-color: #2563eb;
+}
+
+.collection-slot.rarity-epic.owned {
+  border-color: #7c3aed;
+  background: linear-gradient(180deg, #faf5ff 0%, #fff8ea 100%);
+}
+
+.collection-slot.locked {
+  opacity: 0.6;
+}
+
+.collection-icon {
+  font-size: 2rem;
+  margin-bottom: 0.35rem;
+}
+
+.collection-class {
+  font-size: 0.7rem;
+  color: #5c1f1f;
+}
+
+.collection-title {
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.collection-locked {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.card-detail-modal {
+  width: min(480px, 100%);
+}
+
+.card-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  border: 2px solid #2f2418;
+  background: #fff8ea;
+}
+
+.card-detail-header.rarity-epic {
+  border-color: #7c3aed;
+  background: linear-gradient(135deg, #faf5ff, #fff8ea);
+}
+
+.card-detail-icon {
+  font-size: 3rem;
+}
+
+.card-detail-class {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #5c1f1f;
+}
+
+.card-detail-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: normal;
+}
+
+.card-detail-section {
+  margin-bottom: 1rem;
+}
+
+.card-detail-section h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  color: #5c1f1f;
+  font-weight: normal;
+}
+
+.card-detail-section p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.card-detail-section ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.card-detail-acquired {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #666;
+  text-align: right;
+}

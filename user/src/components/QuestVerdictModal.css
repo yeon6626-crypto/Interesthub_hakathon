@@ -1,0 +1,143 @@
+.quest-verdict-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.quest-verdict-modal {
+  width: min(420px, 100%);
+  border: 4px solid #2f2418;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  animation: quest-verdict-pop 0.35s ease-out;
+}
+
+.quest-verdict-modal.success {
+  background: linear-gradient(180deg, #fff8ea 0%, #f5e6c8 100%);
+}
+
+.quest-verdict-modal.fail {
+  background: linear-gradient(180deg, #fff5f5 0%, #f5e6c8 100%);
+}
+
+@keyframes quest-verdict-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.quest-verdict-tab {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #fff;
+  border-bottom: 3px solid #2f2418;
+}
+
+.quest-verdict-modal.success .quest-verdict-tab {
+  background: linear-gradient(180deg, #5cb85c 0%, #4a7754 100%);
+}
+
+.quest-verdict-modal.fail .quest-verdict-tab {
+  background: linear-gradient(180deg, #c0392b 0%, #8b1e1e 100%);
+}
+
+.quest-verdict-body {
+  padding: 1.25rem 1.25rem 1.5rem;
+  text-align: center;
+}
+
+.quest-verdict-guild-master {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.quest-verdict-badge {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  border: 2px solid #2f2418;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.65rem;
+}
+
+.badge-success {
+  background: linear-gradient(180deg, #f4c430 0%, #e8a317 100%);
+  color: #2f2418;
+  box-shadow: 0 0 12px rgba(244, 196, 48, 0.6);
+}
+
+.badge-fail {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.quest-verdict-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  color: #5c1f1f;
+}
+
+.quest-verdict-quest-name {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.quest-verdict-speech {
+  margin: 0 0 1.25rem;
+  padding: 1rem;
+  border: 2px dashed #8b6f47;
+  background: rgba(255, 255, 255, 0.55);
+  text-align: left;
+}
+
+.quest-verdict-reason {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #2f2418;
+  font-style: italic;
+}
+
+.quest-verdict-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.quest-verdict-btn {
+  padding: 0.65rem 1.25rem;
+  border: 3px solid #2f2418;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.quest-verdict-btn-primary {
+  background: linear-gradient(180deg, #f4c430 0%, #e8a317 100%);
+  color: #2f2418;
+  font-weight: bold;
+}
+
+.quest-verdict-modal.fail .quest-verdict-btn-primary {
+  background: #e8dcc8;
+}
+
+.quest-verdict-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.quest-verdict-btn:not(:disabled):hover {
+  filter: brightness(1.05);
+}
