@@ -16,7 +16,14 @@ npm install
 cp .env.example .env
 ```
 
-3. Start MongoDB locally, or set `MONGODB_URI` to your MongoDB Atlas connection string.
+3. Set `MONGODB_ATLAS_URL` in `server/.env` for MongoDB Atlas. If it is empty, the server uses local `mongodb://localhost:27017/interesthub`.
+
+**`querySrv ECONNREFUSED` troubleshooting**
+
+- Allow your IP (or `0.0.0.0/0` for dev) in Atlas → **Network Access**.
+- If SRV DNS fails on your network, copy the **standard** connection string (`mongodb://…`, not `mongodb+srv`) from Atlas → Connect → Drivers into `MONGODB_ATLAS_STANDARD_URL` in `.env`.
+- Optionally set `DNS_SERVERS=8.8.8.8,1.1.1.1` in `.env`.
+- Run the server with `npm run dev` from the `server` folder (uses IPv4-first DNS).
 
 ## Run
 

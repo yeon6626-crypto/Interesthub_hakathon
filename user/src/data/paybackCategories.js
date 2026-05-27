@@ -1,38 +1,38 @@
+/** 서버 ExchangeHistory.serviceName 과 일치해야 함 */
 export const PAYBACK_CATEGORIES = [
   {
-    id: 'claude',
-    label: 'Claude 환급권',
-    icon: '🤖',
-    description: 'Anthropic Claude 구독 영수증',
+    id: 'chatgpt',
+    serviceName: 'ChatGPT',
+    label: 'ChatGPT',
+    icon: '💬',
+    description: 'OpenAI ChatGPT 구독·결제',
   },
   {
-    id: 'chatgpt',
-    label: 'ChatGPT 환급권',
-    icon: '💬',
-    description: 'OpenAI ChatGPT 구독 영수증',
+    id: 'claude',
+    serviceName: 'Claude',
+    label: 'Claude',
+    icon: '🤖',
+    description: 'Anthropic Claude 구독·결제',
   },
   {
     id: 'gemini',
-    label: 'Gemini 환급권',
+    serviceName: 'Gemini',
+    label: 'Gemini',
     icon: '✨',
-    description: 'Google Gemini 구독 영수증',
+    description: 'Google Gemini 구독·결제',
   },
   {
-    id: 'lecture',
-    label: '인터넷 강의 환급권',
+    id: 'fastcampus',
+    serviceName: 'Fastcampus',
+    label: '패스트캠퍼스',
     icon: '🎓',
-    description: '패스트캠퍼스 · 인프런 결제 영수증',
-    notice: '패스트캠퍼스 및 인프런 영수증만 인증 가능합니다',
+    description: '패스트캠퍼스 강의 결제',
   },
-]
-
-export const PAYBACK_BANKS = [
-  '대구은행',
-  '토스뱅크',
-  '국민은행',
-  '신한은행',
-  '카카오뱅크',
-  '우리은행',
-  '하나은행',
-  'NH농협은행',
+  {
+    id: 'inflearn',
+    serviceName: 'Inflearn',
+    label: '인프런',
+    icon: '📚',
+    description: '인프런 강의 결제',
+  },
 ]

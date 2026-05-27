@@ -4,9 +4,9 @@ export const PORTONE_STORE_ID = 'store-708b7f28-dc35-4361-b7b2-ecc978abdc53'
 /** 포트원 V2 채널 키 (inicis_v2 · Interesthub) */
 export const PORTONE_CHANNEL_KEY = 'channel-key-4d52a984-f5ae-48a4-b3fd-2f7fb92d2a21'
 
-const DEFAULT_CUSTOMER_NAME = '김동연'
-const DEFAULT_CUSTOMER_EMAIL = 'yeon6626@gmail.com'
-const DEFAULT_CUSTOMER_PHONE = '010-0000-0000'
+const DEV_DEFAULT_CUSTOMER_NAME = '테스트 구매자'
+const DEV_DEFAULT_CUSTOMER_EMAIL = 'test@example.com'
+const DEV_DEFAULT_CUSTOMER_PHONE = '010-0000-0000'
 
 /**
  * @param {object} pkg diaPackages 항목
@@ -23,9 +23,20 @@ export async function requestDiaPackagePayment(pkg, user) {
     }
   }
 
+  const isProd = import.meta.env.PROD
   const customerName =
-    user?.nickname || user?.name || DEFAULT_CUSTOMER_NAME
-  const customerEmail = user?.email || DEFAULT_CUSTOMER_EMAIL
+    user?.nickname ||
+    user?.name ||
+    (isProd ? '구매자' : DEV_DEFAULT_CUSTOMER_NAME)
+  const customerEmail =
+    user?.email || (isProd ? '' : DEV_DEFAULT_CUSTOMER_EMAIL)
+
+  if (isProd && !user?.email) {
+    return {
+      success: false,
+      message: '결제를 위해 계정 이메일이 필요합니다. 마이페이지에서 확인해 주세요.',
+    }
+  }
 
   try {
     const payment = await PortOne.requestPayment({
@@ -40,7 +51,9 @@ export async function requestDiaPackagePayment(pkg, user) {
         name: customerName,
         fullName: customerName,
         email: customerEmail,
-        phoneNumber: user?.phoneNumber || DEFAULT_CUSTOMER_PHONE,
+        phoneNumber:
+          user?.phoneNumber ||
+          (isProd ? '010-0000-0000' : DEV_DEFAULT_CUSTOMER_PHONE),
       },
     })
 

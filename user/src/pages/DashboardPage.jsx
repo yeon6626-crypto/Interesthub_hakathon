@@ -45,6 +45,9 @@ import { fireQuestConfetti } from '@/utils/questConfetti'
 import QuestVerdictModal from '@/components/QuestVerdictModal'
 import CurrencyShopModal from '@/components/CurrencyShopModal'
 import '@/components/CurrencyShopModal.css'
+import AdminExchangePanel from '@/components/AdminExchangePanel'
+import '@/components/AdminExchangePanel.css'
+import { getAdminAccess } from '@/api/client'
 import {
   calculateCoinExchange,
   calculateDiamondExchange,
@@ -117,6 +120,12 @@ function DashboardPage() {
   const currencyProcessingRef = useRef(false)
   const [isCurrencyShopOpen, setIsCurrencyShopOpen] = useState(false)
   const [isCurrencyProcessing, setIsCurrencyProcessing] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  const dashboardTabs = useMemo(() => {
+    if (!isAdmin) return TABS
+    return [...TABS, { id: 'admin', label: '관리자 모드' }]
+  }, [isAdmin])
 
   const addNotification = useCallback((message) => {
     setNotifications((prev) => [createNotification(message), ...prev])
@@ -234,6 +243,15 @@ function DashboardPage() {
           syncQuestRewardsFromCatalog(loadAcceptedQuests(meRes.data._id))
         )
         setQuestManualState(loadQuestManualState(meRes.data._id))
+
+        try {
+          const adminRes = await getAdminAccess()
+          if (!cancelled) {
+            setIsAdmin(adminRes?.data?.isAdmin === true)
+          }
+        } catch {
+          if (!cancelled) setIsAdmin(false)
+        }
       } catch (err) {
         if (!cancelled) addNotification(err.message)
       } finally {
@@ -272,6 +290,12 @@ function DashboardPage() {
       setQuestPage(Math.max(1, questPageCount))
     }
   }, [questPage, questPageCount])
+
+  useEffect(() => {
+    if (activeTab === 'admin' && !isAdmin) {
+      setActiveTab('roadmap')
+    }
+  }, [activeTab, isAdmin])
 
   const handleLogout = async () => {
     await flushEconomySync()
@@ -455,7 +479,8 @@ function DashboardPage() {
       const result = await verifyQuestImage(
         quest.title,
         base64Data,
-        mimeType
+        mimeType,
+        quest.questCode || quest._id
       )
 
       if (result.status === 'SUCCESS') {
@@ -621,20 +646,9 @@ function DashboardPage() {
     }
   }
 
-  const handlePaybackDeductDiamonds = (requiredDia) => {
-    if (!user) return false
-
-    const diamondBalance = user.gold ?? 0
-    const amount = Number(requiredDia) || 0
-
-    if (amount <= 0) return true
-    if (diamondBalance < amount) return false
-
-    updateUserState({
-      ...user,
-      gold: diamondBalance - amount,
-    })
-    return true
+  const handlePaybackComplete = (economyUser) => {
+    if (!economyUser) return
+    updateUserState(mergeUserFromApi({ ...user, ...economyUser }))
   }
 
   const handleVerdictModalClose = () => {
@@ -773,7 +787,7 @@ function DashboardPage() {
 
         <main className="dashboard-main">
           <nav className="dashboard-tabs">
-            {TABS.map((tab) => (
+            {dashboardTabs.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
@@ -1020,6 +1034,10 @@ function DashboardPage() {
               <CareerCollection onSelectCard={setSelectedCard} />
             </div>
           )}
+
+          {activeTab === 'admin' && isAdmin && (
+            <AdminExchangePanel onNotify={addNotification} />
+          )}
         </main>
       </div>
 
@@ -1063,42 +1081,42 @@ function DashboardPage() {
         coinBalance={user?.coin ?? 0}
         diamondBalance={user?.gold ?? 0}
         isProcessing={isCurrencyProcessing}
-        userId={user?._id}
-        userNickname={user?.nickname}
         onNotify={addNotification}
-        onDeductDiamonds={handlePaybackDeductDiamonds}
+        onPaybackComplete={handlePaybackComplete}
         onClose={() => setIsCurrencyShopOpen(false)}
         onExchange={handleExchange}
         onExchangeDiaToCoin={handleExchangeDiaToCoin}
         onChargeDia={handleChargeDia}
       />
 
-      <div className="quest-debug-actions">
-        <button
-          type="button"
-          className="quest-debug-level-btn"
-          onClick={handleDebugAddLevel}
-          title="디버그: 레벨 +1 (EXP 유지)"
-        >
-          ⬆️ 레벨 +1
-        </button>
-        <button
-          type="button"
-          className="quest-debug-coin-btn"
-          onClick={handleDebugAddCoins}
-          title="디버그: 보유 코인 +1000"
-        >
-          💰 코인 +1000
-        </button>
-        <button
-          type="button"
-          className="quest-debug-new-day-btn"
-          onClick={handleDebugNewDay}
-          title="디버그: 퀘스트·누적 진행도를 수동 초기화합니다"
-        >
-          🌅 새로운 하루 시작 (디버그)
-        </button>
-      </div>
+      {!import.meta.env.PROD && (
+        <div className="quest-debug-actions">
+          <button
+            type="button"
+            className="quest-debug-level-btn"
+            onClick={handleDebugAddLevel}
+            title="디버그: 레벨 +1 (EXP 유지)"
+          >
+            ⬆️ 레벨 +1
+          </button>
+          <button
+            type="button"
+            className="quest-debug-coin-btn"
+            onClick={handleDebugAddCoins}
+            title="디버그: 보유 코인 +1000"
+          >
+            💰 코인 +1000
+          </button>
+          <button
+            type="button"
+            className="quest-debug-new-day-btn"
+            onClick={handleDebugNewDay}
+            title="디버그: 퀘스트·누적 진행도를 수동 초기화합니다"
+          >
+            🌅 새로운 하루 시작 (디버그)
+          </button>
+        </div>
+      )}
     </div>
   )
 }

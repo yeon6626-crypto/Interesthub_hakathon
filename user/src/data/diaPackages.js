@@ -14,11 +14,11 @@ export const DIA_CHARGE_PACKAGES = [
     description: '가성비 입문 패키지',
   },
   {
-    id: 'contest_pass',
-    name: '공모전 패스',
+    id: 'special_pack',
+    name: '스페셜 팩',
     priceKrw: 20000,
     diamonds: 200,
-    description: '공모전 보증금 결제용',
+    description: '학습 지원 프리미엄 패키지',
     highlight: true,
   },
 ]

@@ -444,13 +444,15 @@ function GuildTavern({ user, gold, onDeductDiamonds, onRefundDiamonds }) {
                       >
                         🔒 모집 마감하기
                       </button>
-                      <button
-                        type="button"
-                        className="party-debug-btn"
-                        onClick={() => handleAddDebugApplicant(party.id)}
-                      >
-                        디버그: 가짜 신청자 넣기
-                      </button>
+                      {!import.meta.env.PROD && (
+                        <button
+                          type="button"
+                          className="party-debug-btn"
+                          onClick={() => handleAddDebugApplicant(party.id)}
+                        >
+                          디버그: 가짜 신청자 넣기
+                        </button>
+                      )}
                     </>
                   ) : joined ? (
                     <button type="button" className="party-join-btn" disabled>
@@ -620,7 +622,7 @@ function GuildTavern({ user, gold, onDeductDiamonds, onRefundDiamonds }) {
                   <li key={applicant.userId} className="tavern-applicant-item">
                     <div className="tavern-applicant-header">
                       <strong>{applicant.nickname}</strong>
-                      {applicant.isDebug && (
+                      {!import.meta.env.PROD && applicant.isDebug && (
                         <span className="tavern-debug-badge">디버그</span>
                       )}
                       <div className="tavern-applicant-actions">

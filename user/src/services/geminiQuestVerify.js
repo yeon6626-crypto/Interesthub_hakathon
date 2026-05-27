@@ -33,14 +33,73 @@ export function fileToBase64(file) {
   })
 }
 
-function buildVerificationPrompt(questTitle) {
-  return `너는 RPG 게임 세계관의 "AI 길드장"이야. 제출된 사진이 [${questTitle}] 미션과 관련이 있어 보이면 SUCCESS, 전혀 무관하면 FAIL로 판정해.
-관대하게 판정해: 학습·운동·실습·과제·강의 화면 등 미션 수행으로 볼 수 있으면 SUCCESS.
+function resolveQuestCategory(questCode, questTitle) {
+  const code = String(questCode || '').toLowerCase()
+  const title = String(questTitle || '')
 
-반드시 다른 설명 없이 아래의 JSON 형식으로만 응답해줘.
+  if (
+    code.includes('exercise') ||
+    code.includes('workout') ||
+    /운동|헬스|피트니스|러닝|조깅/.test(title)
+  ) {
+    return 'exercise'
+  }
+
+  if (
+    code.includes('study') ||
+    /공부|학습|독서|강의|과제|시험|도서|책/.test(title)
+  ) {
+    return 'study'
+  }
+
+  return 'unknown'
+}
+
+function buildVerificationPrompt(questTitle, questCode) {
+  const category = resolveQuestCategory(questCode, questTitle)
+
+  const studyRules = `【공부 퀘스트 인증 기준 — 엄격 적용】
+SUCCESS는 아래 중 하나 이상이 사진에서 명확히 보일 때만 허용:
+1) 책·교재·노트·필기가 보이는 사진 (책 표지, 펼친 책, 책상 위 교재 등)
+2) 공부하는 사람이 보이는 사진 (책/노트/노트북을 보며 학습하는 모습, 도서관·카페·책상에서 공부하는 장면)
+
+아래는 무조건 FAIL:
+- 음식, 반려동물, 풍경, 셀카·인물만 있는 사진, 게임·SNS·쇼핑 화면
+- 운동·헬스장·기구 사진
+- 공부와 무관한 일상 사진`
+
+  const exerciseRules = `【운동 퀘스트 인증 기준 — 엄격 적용】
+SUCCESS는 아래 중 하나 이상이 사진에서 명확히 보일 때만 허용:
+1) 헬스장·피트니스 센터·운동 시설 내부 사진
+2) 운동 기구(머신, 덤벨, 러닝머신, 바벨, 요가매트 등)가 보이는 사진
+3) 운동하는 사람의 전신 또는 상반신이 보이는 사진 (운동 복장·기구 사용·스트레칭·달리기 등 운동 맥락이 분명할 것)
+
+아래는 무조건 FAIL:
+- 책·공부·강의·노트북으로 학습하는 장면
+- 음식, 풍경, 일반 실내·거리 사진만 있는 경우
+- 운동과 무관한 일상·셀카`
+
+  const categoryRules =
+    category === 'study'
+      ? studyRules
+      : category === 'exercise'
+        ? exerciseRules
+        : `${studyRules}\n\n${exerciseRules}\n\n미션 제목을 보고 공부/운동 중 해당하는 기준만 적용하세요.`
+
+  return `너는 RPG 게임 세계관의 "AI 길드장"이야.
+유저가 제출한 사진이 미션 [${questTitle}]의 증거로 적합한지 판정한다.
+관대하게 통과시키지 말고, 아래 기준을 엄격히 적용한다. 애매하면 FAIL.
+
+${categoryRules}
+
+판정:
+- 기준에 명확히 부합 → "SUCCESS"
+- 부합하지 않거나 불명확 → "FAIL"
+
+반드시 다른 설명 없이 아래 JSON 형식으로만 응답:
 {
   "status": "SUCCESS" 또는 "FAIL",
-  "reason": "성공 시 '훌륭하군, 모험가여! 전자공학의 기초를 다졌으니 다음 스킬로 나아가게.' 같은 칭찬 / 실패 시 '이보게, 치킨 사진으로는 이 퀘스트를 깰 수 없네! 다시 증거를 가져오시게.' 같은 위트 있는 반려 사유"
+  "reason": "성공 시 짧은 칭찬(한국어) / 실패 시 왜 반려했는지와 어떤 사진을 올려야 하는지 안내(한국어, 위트 있게)"
 }`
 }
 
@@ -68,22 +127,13 @@ function parseVerificationResult(text) {
       return { status, reason }
     }
   } catch {
-    /* JSON 파싱 실패 시 아래 폴백 */
-  }
-
-  const normalized = raw.toUpperCase()
-  if (normalized.includes('SUCCESS')) {
-    return {
-      status: 'SUCCESS',
-      reason: '훌륭하군, 모험가여! 미션 인증에 성공했네.',
-    }
+    /* JSON 파싱 실패 */
   }
 
   return {
     status: 'FAIL',
     reason:
-      raw.slice(0, 200) ||
-      '이보게, 미션과 무관한 증거인 것 같군. 다른 사진을 가져오시게.',
+      '이보게, 인증 결과를 확인할 수 없네. 공부 퀘스트는 책·공부 장면, 운동 퀘스트는 헬스장·기구·운동 전신 사진을 다시 올려보시게.',
   }
 }
 
@@ -91,11 +141,18 @@ function parseVerificationResult(text) {
  * @param {string} questTitle
  * @param {string} base64Data 순수 base64 (헤더 없음)
  * @param {string} mimeType 예: image/jpeg
+ * @param {string} [questCode] 예: daily_study, daily_exercise
  * @returns {Promise<{ status: 'SUCCESS'|'FAIL', reason: string }>}
  */
-export async function verifyQuestImage(questTitle, base64Data, mimeType) {
+export async function verifyQuestImage(
+  questTitle,
+  base64Data,
+  mimeType,
+  questCode = ''
+) {
   const imageFingerprint = base64Data.slice(0, 12_000)
-  const requestKey = `quest:${hashGeminiKey([
+  const requestKey = `quest-v2:${hashGeminiKey([
+    questCode,
     questTitle,
     mimeType,
     imageFingerprint,
@@ -108,7 +165,7 @@ export async function verifyQuestImage(questTitle, base64Data, mimeType) {
       {
         parts: [
           { inlineData: { mimeType, data: base64Data } },
-          { text: buildVerificationPrompt(questTitle) },
+          { text: buildVerificationPrompt(questTitle, questCode) },
         ],
       },
     ],

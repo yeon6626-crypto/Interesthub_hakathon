@@ -13,9 +13,7 @@ function CurrencyShopModal({
   coinBalance,
   diamondBalance,
   isProcessing,
-  userId,
-  userNickname,
-  onDeductDiamonds,
+  onPaybackComplete,
   onNotify,
   onClose,
   onExchange,
@@ -93,7 +91,7 @@ function CurrencyShopModal({
             onClick={() => setActiveTab('payback')}
             disabled={isProcessing}
           >
-            AI 영수증 환급
+            네이버페이 포인트 환급
           </button>
         </div>
 
@@ -228,13 +226,11 @@ function CurrencyShopModal({
           ) : (
             <>
               <h2 id="currency-shop-title" className="currency-shop-title">
-                AI 영수증 자동 환급
+                네이버페이 포인트 환급
               </h2>
               <AiPaybackPanel
-                userId={userId}
-                userNickname={userNickname}
                 diamondBalance={diamondBalance}
-                onDeductDiamonds={onDeductDiamonds}
+                onPaybackComplete={onPaybackComplete}
                 onNotify={onNotify}
               />
             </>

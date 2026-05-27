@@ -1,25 +1,24 @@
-require('dotenv').config();
-
-process.env.PORT = process.env.PORT || '5000';
-
-const mongoose = require('mongoose');
+const env = require('./src/config/env');
+const {
+  connectMongo,
+  logMongoConnectionHelp,
+} = require('./src/config/connectMongo');
 const startServer = require('./src/index');
 const User = require('./src/models/User');
 
-const MONGODB_URI =
-  process.env.MONGODB_URI || 'mongodb://localhost:27017/interesthub';
-
 async function bootstrap() {
   try {
-    await mongoose.connect(MONGODB_URI);
-    console.log('연결 성공');
+    await connectMongo(env.mongodbUri);
+    console.log(
+      env.isAtlasMongo ? 'MongoDB Atlas 연결 성공' : '로컬 MongoDB 연결 성공'
+    );
 
     await User.syncIndexes();
     console.log('구버전 인덱스 동기화 완료!');
 
     startServer();
   } catch (error) {
-    console.error('MongoDB connection error:', error.message);
+    logMongoConnectionHelp(error);
     process.exit(1);
   }
 }

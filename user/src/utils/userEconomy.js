@@ -9,7 +9,8 @@ export const INITIAL_EXP = 0
 export const EXP_CAP = 4000
 
 export const LEVEL_MILESTONE_COIN_REWARD = 500
-export const COLLECTION_COMPLETE_COIN_REWARD = 1500
+/** 진로 카드 도감 전체 수집 보상 (기대 뽑기 ~7.45회 × 500코인 수준) */
+export const COLLECTION_COMPLETE_COIN_REWARD = 3500
 
 /**
  * @param {object | null | undefined} user

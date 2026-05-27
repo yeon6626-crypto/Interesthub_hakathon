@@ -29,7 +29,16 @@
 }
 
 .currency-shop-modal.wide {
-  width: min(860px, 96vw);
+  width: min(920px, 96vw);
+  max-height: min(92vh, 720px);
+  display: flex;
+  flex-direction: column;
+}
+
+.currency-shop-modal.wide .currency-shop-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .currency-shop-nav {
@@ -187,9 +196,10 @@
 .currency-package-card {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) 6.75rem;
   grid-template-rows: auto auto;
-  gap: 0.12rem 0.65rem;
+  gap: 0.15rem 0.75rem;
+  align-items: start;
   padding: 0.6rem 0.7rem;
   border: 2px solid #2f2418;
   background: #fff8ea;
@@ -213,19 +223,28 @@
 }
 
 .currency-package-name {
+  grid-column: 1;
+  grid-row: 1;
   font-weight: bold;
   font-size: 0.86rem;
   color: #5c1f1f;
 }
 
 .currency-package-price {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: stretch;
+  text-align: left;
   font-size: 0.8rem;
   font-weight: bold;
+  font-variant-numeric: tabular-nums;
   color: #2f2418;
+  white-space: nowrap;
 }
 
 .currency-package-reward {
   grid-column: 1;
+  grid-row: 2;
   font-size: 0.78rem;
   color: #4a7754;
   font-weight: bold;
@@ -234,9 +253,11 @@
 .currency-package-desc {
   grid-column: 2;
   grid-row: 2;
+  justify-self: stretch;
   font-size: 0.66rem;
+  line-height: 1.35;
   color: #666;
-  text-align: right;
+  text-align: left;
 }
 
 .currency-shop-btn {
