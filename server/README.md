@@ -10,15 +10,15 @@ Node.js + Express + MongoDB API server.
 npm install
 ```
 
-2. Copy environment file and edit values:
+1. Copy environment file and edit values:
 
 ```bash
 cp .env.example .env
 ```
 
-3. Set `MONGODB_ATLAS_URL` in `server/.env` for MongoDB Atlas. If it is empty, the server uses local `mongodb://localhost:27017/interesthub`.
+1. Set `MONGODB_ATLAS_URL` in `server/.env` for MongoDB Atlas. If it is empty, the server uses local `mongodb://localhost:27017/interesthub`.
 
-**`querySrv ECONNREFUSED` troubleshooting**
+`**querySrv ECONNREFUSED` troubleshooting**
 
 - Allow your IP (or `0.0.0.0/0` for dev) in Atlas → **Network Access**.
 - If SRV DNS fails on your network, copy the **standard** connection string (`mongodb://…`, not `mongodb+srv`) from Atlas → Connect → Drivers into `MONGODB_ATLAS_STANDARD_URL` in `.env`.
@@ -43,23 +43,27 @@ npm start
 
 Monorepo: set **Root Directory** to `server`, or use the repo root `render.yaml` Blueprint.
 
-| Dashboard field | Value |
-|-----------------|--------|
-| Root Directory | `server` |
-| Build Command | `npm install` |
-| Start Command | `npm start` |
-| Health Check Path | `/api/health` |
-| Node version | `20` (matches `package.json` engines) |
+
+| Dashboard field   | Value                                 |
+| ----------------- | ------------------------------------- |
+| Root Directory    | `server`                              |
+| Build Command     | `npm install`                         |
+| Start Command     | `npm start`                           |
+| Health Check Path | `/api/health`                         |
+| Node version      | `20` (matches `package.json` engines) |
+
 
 ### Environment variables (Render → Environment)
 
-| Key | Required | Example |
-|-----|----------|---------|
-| `MONGODB_ATLAS_URL` | Yes | `mongodb+srv://...` |
-| `JWT_SECRET` | Yes | long random string |
-| `JWT_EXPIRES_IN` | Yes | `7d` |
-| `NODE_ENV` | Yes | `production` |
-| `ADMIN_EMAILS` | Yes | `admin@example.com` |
+
+| Key                 | Required | Example             |
+| ------------------- | -------- | ------------------- |
+| `MONGODB_ATLAS_URL` | Yes      | `mongodb+srv://...` |
+| `JWT_SECRET`        | Yes      | long random string  |
+| `JWT_EXPIRES_IN`    | Yes      | `7d`                |
+| `NODE_ENV`          | Yes      | `production`        |
+| `ADMIN_EMAILS`      | Yes      | `admin@example.com` |
+
 
 Do **not** set `PORT` — Render injects it automatically.
 
@@ -88,3 +92,5 @@ src/
   app.js
 Procfile          # optional (Render uses Start Command: npm start)
 ```
+
+update deployment
