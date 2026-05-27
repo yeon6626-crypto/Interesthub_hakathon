@@ -1,0 +1,23 @@
+# Render Blueprint — Interesthub API (monorepo, server/)
+# Dashboard: New → Blueprint → connect repo, or Web Service with Root Directory = server
+services:
+  - type: web
+    name: interesthub-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      # Dashboard에서 반드시 설정 (sync: false = Blueprint에 값 저장 안 함)
+      - key: MONGODB_ATLAS_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_EMAILS
+        sync: false
