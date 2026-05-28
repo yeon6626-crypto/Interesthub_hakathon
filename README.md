@@ -1,47 +1,334 @@
-# Interesthub
+# ⚡ Interesthub
 
-해커톤 프로젝트 — RPG 테마 진로·퀘스트 대시보드
+## 팀 소개 👥
 
-## 구조
+### 언발란스 👥
 
-- `user/` — React (Vite) 프론트엔드
-- `server/` — Express + MongoDB API
+| 이름 | 담당 |
+| :--- | :--- |
+| 김동연 | 코드 구현 및 연동 구현 |
+| 배효진 | UI/UX 디자인 설계 |
+| 서정빈 | 아이디어 기획 및 발표 |
 
-## 실행
+## 사용 기술 스택
 
-### 서버
+* **Frontend**: React 19, Vite 8, JavaScript, CSS, React Router
+* **Backend**: Node.js (20.x), Express
+* **Database**: MongoDB Atlas, Mongoose
+* **AI**: Google Gemini API (`@google/generative-ai`)
+* **결제**: PortOne Browser SDK (V2)
+* **배포**: Vercel (FE), Render (BE)
+* **작업 환경**: Cursor
+* **배포 주소**: [Interesthub](#)(많은 인원이 들어가면 서버가 불안정해집니다.)
 
-```bash
-cd server
-npm install
-# .env 설정 후
-npm run dev
+## 📄 1) 서비스 기획 의도 및 Pain Point
+
+### 1. 전공 진로 탐색 및 수강 신청의 혼란 (신입생 Pain Point)
+* **현실 및 문제점**: 명확한 진로나 목표를 확립하지 못한 채 대학에 진학하는 학생들이 대다수입니다. 시간표와 교과과정이 정형화되어 있던 고등학교와 달리, 대학의 높은 자율성은 오히려 **선택의 장애를 유발**합니다.
+* **시간 낭비 발생**: 학과 내 수많은 교과과목이 본인의 미래 진로와 어떻게 연결되는지 파악하기 위해 **불필요하게 많은 시간과 비용을 조사에 소모**하게 됩니다.
+
+### 2. 공모전 팀원 매칭의 불확실성과 리스크 (팀 빌딩 Pain point)
+* **현실 및 문제점**: 에브리타임, 오픈채팅방 등 기존의 커뮤니티를 통한 공모전 구인은 지원자의 역량과 스펙을 **객관적으로 검증할 수 있는 수단이 전무**합니다.
+* **프로젝트 파행 유발**: 팀원의 **허위 스펙이나 역량 부족, 혹은 무책임한 중도 이탈(노쇼)**로 인해 프로젝트가 무산되거나 남은 팀원들이 피해를 떠안는 문제가 빈번히 발생합니다.
+
+### 3. 정보 과잉 시대의 몰입도 저하 (서비스 컨셉의 당위성)
+* **현실 및 문제점**: 인터넷의 발달로 커리어 관련 정보는 과잉 공급되고 있으나, 파편화되고 압도적인 정보량으로 인해 대학생들은 오히려 **피로감을 느끼고 다른 유혹(유튜브, SNS 등)에 쉽게 노출**됩니다.
+* **RPG 게임 메커니즘의 도입 이유**: 딱딱한 텍스트 중심의 기존 취업 플랫폼에서 탈피, 대중에게 가장 친숙하고 몰입도가 높은 **RPG(역할수행게임) 형식을 도입**했습니다. 정보의 홍수 속에서 유저가 정보에 압도되지 않고, 자신의 성장을 직관적인 '레벨'과 '퀘스트'로 확인하며 주도적으로 커리어를 빌딩할 수 있는 최적의 몰입 환경을 제공하고자 합니다.
+
+
+## 📄 2) 핵심 키워드 및 한 줄 정의
+
+### 1. 서비스 한 줄 정의
+> "정보의 과잉을 허물고, 퀘스트를 통해 나만의 커리어를 빌딩하는 대학생 RPG 성장 플랫폼"
+
+### 2. 5대 핵심 키워드 (5 Key Elements)
+
+*   🔗 **연결 (Connection):**
+    *   파편화된 대학 생활 정보들을 체계적으로 연결하여 사용자에게 최적의 로드맵을 제공합니다.
+    *   역량 검증 기반의 매칭 시스템을 통해 무책임한 팀원 빌딩 리스크를 없애고, 신뢰할 수 있는 **공모전 파트너들을 강력하게 연결**합니다.
+*   🎯 **꿈 (Dream):**
+    *   아직 진로를 정하지 못한 대학생에게는 '진로 카드깡(랜덤 추천)'이라는 게임적 요소를 통해 흥미로운 탐색의 기회를 제공합니다.
+    *   이미 꿈이 확고한 대학생에게는 테크트리(교과목 및 자격증 로드맵)를 제시하여 **목표에 도달할 수 있는 가장 빠른 길**을 안내합니다.
+*   📊 **과잉 (Overwhelm):**
+    *   정보의 홍수 속에서 무분별한 텍스트에 압도당해 진로 설계를 포기하는 대학생들을 위해, 불필요한 노이즈를 제거하고 **핵심적인 커리어 정보만을 정제**하여 보여줍니다.
+*   🚧 **경계 (Boundary):**
+    *   학교 홈페이지, 커뮤니티, 자격증 시행처, 공모전 사이트 등 사방에 **흩어져 있던 정보의 경계를 완전히 허물고 하나의 웹사이트로 통합**(All-in-One)합니다.
+*   ⚠️ **불편 (Inconvenience):**
+    *   "과목 선택할 때 뭐 들어야 할지 모르겠다", "공모전 팀원이 갑자기 탈주했다" 등 대학 생활과 스펙 쌓기 과정에서 마주하는 **현실적인 모든 불편함을 게이밍 메커니즘으로 유쾌하게 해소**합니다.
+
+
+## 🛠️ 3) 주요 기능
+
+### 1. 🗺️ AI 스킬트리형 커리어 로드맵
+*   Gemini AI가 학년별(1~4학년) **추천 교과목 로드맵** 제공
+*   과목 선택 시 학점 포인트 및 예상 학점 계산 기능 지원
+*   관심 진로 기반 맞춤형 학습 경로 시각화
+*   복잡한 교과과정을 직관적으로 탐색 가능
+
+### 2. 🎯 AI 퀘스트 & 리워드 시스템
+*   공부 및 운동 인증 사진 업로드 기반 일일 퀘스트 제공
+*   Gemini AI가 인증 이미지를 분석하여 수행 여부 판단
+*   일정 횟수 이상 수행 시 주간 퀘스트 추가 보상 지급
+*   **게임형 성장 구조를 통해 지속적인 자기계발과 플랫폼 참여 유도**
+
+### 3. 📁 AI 인증 기반 포트폴리오 시스템
+*   프로젝트, 자격증, 공모전 활동 등을 이미지 기반으로 인증 가능
+*   Gemini AI가 이미지와 설명의 일치 여부를 분석하여 검증 수행
+*   인증 완료 시 활동 내역이 자동으로 포트폴리오 특이사항에 반영
+*   **허위 스펙 문제를 줄이고 신뢰성 높은 프로필 구성 지원**
+
+### 4. 🤝 공모전 길드 매칭 시스템
+*   링커리어, 위비티, 캠퍼스픽 등 공모전 플랫폼 통합 탐색 지원
+*   100다이아를 사용해 파티 생성 및 참가 신청 가능
+*   파티 수락 시 전용 채팅방 생성으로 협업 지원
+*   **AI 인증 포트폴리오 기반으로 신뢰도 높은 팀빌딩 환경 제공**
+
+### 5. 🎲 진로 카드 가챠 시스템
+*   게임형 가챠 시스템을 활용한 직업 탐색 및 컬렉션 기능
+*   500코인으로 5장의 직업 카드 획득 가능
+*   총 12종의 직업 카드를 모두 수집하면 보상 지급 및 컬렉션 초기화
+*   **게임형 보상 구조를 통해 사용자의 반복 탐색과 진로 관심 유도**
+
+
+## 💵 4) 수익 모델
+
+### 1. 서비스 재화 시스템 (Economy System)
+플랫폼 내의 재화는 유저의 학습 의욕을 고취하고 생태계를 유지하는 핵심 동력입니다.
+
+*   **웹 재화 (코인, Coin):**
+    *   획득처: 일일/주간 과제 수행과 레벨의 5단위 상승으로 **대학생의 성실한 학업 활동을 통해 획득**합니다.
+    *   사용처: **'진로 가챠' 시스템에서 역량 카드를 뽑는 데 사용**됩니다. 이를 통해 무과금 유저도 학습만으로 게임적 재미를 충분히 누릴 수 있습니다.
+*   **현물 재화 (다이아, Diamond):**
+    *   획득처: 포트원(Portone) PG API를 통한 **직접 충전, 또는 보유한 코인을 일정 비율로 환전**하여 획득합니다.
+    *   특징: 서비스 내의 **공모전 파티 기능을 이용**하거나, 최종적으로 **실물 포인트(네이버페이 등)로 환급**받을 수 있는 가교 역할을 합니다.
+*   **명성치(reputation):**
+    *   획득처: **일일 퀘스트나 주간 퀘스트 완료** 시 +1 명성치를 획득합니다.
+    *   특징: 퀘스트를 많이 완료할수록 명성치가 높아지기 때문에, 공모전 이력서에서 **'성실도'의 척도**로 작동합니다.
+
+### 2. 현물 재화의 가치 사슬 (Value Chain)
+결제하거나 환전한 다이아는 대학생의 실질적인 니즈를 해결하는 다음 4가지 소비처에 집중됩니다.
+
+*   🤝 **공모전 파티 생성**:
+    팀 빌딩을 위해 파티를 생성할 때 일정량의 다이아를 소모합니다. 이는 무분별한 파티 생성을 방지하고, 프로젝트에 진심인 유저만 필터링하는 **'신뢰 장치'** 역할을 합니다.
+*   📖 **환급 및 페이백 퀘스트**:
+    플랫폼 내에서 쌓은 다이아를 네이버페이 등 실물 포인트로 환급 신청합니다. 이 과정은 '관리자 승인 프로세스'를 거치며 정보의 정확성을 검증합니다.
+
+### 3. 플랫폼 수익 모델 (Revenue Model)
+서비스의 지속 가능성을 확보하는 두 가지 전략입니다.
+
+*   **운영 및 중개 수수료 (Primary):**
+    *   수익 구조: 유저가 재화를 환전하거나 최종적으로 **현물 포인트로 환급받는 과정에서 중개 수수료를 발생시켜 안정적인 수익원**을 확보합니다.
+    *   1.3배 환급 로직을 통한 유저 락인(Lock-in): **현물 환급 시 실제 가치의 1.3배에 해당하는 다이아를 요구하는 구조를 설계했습니다.** 이는 퀘스트를 통해 성실히 재화를 모은 유저에게 '시장가 대비 저렴한 혜택'이라는 강력한 보상을 제공하여, **서비스에 대한 장기적인 방문과 활동(Retention)을 유도**합니다.
+*   **타겟팅 광고 및 제휴 수익 (Secondary):**
+    *   데이터 기반 광고: 유저의 관심 직무, 이수 교과목, 보유 스킬 데이터가 명확하기 때문에, 채용 플랫폼, 대기업 공모전, 자격증 강의사로부터 유효 타겟 광고를 유치하여 **고단가 광고 수익을 창출**합니다.
+ 
+## 📈 5) 한계 및 향후 발전 방향: 재화 경제 시스템 (Economy System)
+
+### 1. 현재의 한계 (Limitations)
+*   **재화 인플레이션 위험**: 현재 다양한 퀘스트와 보상 체계가 존재하나, 유저의 성장이 가속화됨에 따라 **서비스 내 재화(코인 및 다이아)가 과잉 공급되어 화폐 가치가 하락하고 인플레이션이 발생할 가능성**이 존재합니다.
+*   **밸런스 조정의 경직성**: 재화 획득량과 상품 가격이 고정되어 있을 경우, 유저의 숙련도에 따른 **체감 난이도 차이를 즉각적으로 반영하기 어렵습니다.**
+
+### 2. 향후 발전 방향 (Future Directions)
+
+#### ① AI 기반 동적 밸런스 조정 (Dynamic Balancing)
+*   **방향**: 현재 구현된 'AI 이미지 검증'과 '사용자 데이터 분석' 엔진을 고도화하여, **유저 전체의 재화 보유량과 소비 패턴을 실시간으로 분석**합니다.
+*   **효과**: 인플레이션 징후 포착 시, 퀘스트 보상량이나 상품 가격을 AI가 자동으로 미세하게 조정하여 경제 밸런스를 유지하는 '자동 조절 시스템'을 도입할 계획입니다.
+
+#### ② 관리자 모니터링 대시보드 고도화 (Advanced Monitoring)
+*   **방향**: 현재 환급 승인/거절 기능을 넘어, **서버 전체의 '재화 발행량 vs 회수량(Sink)'을 실시간 모니터링하는 시각화 대시보드를 구축**합니다.
+*   **효과**: 특정 유저나 구간에서 재화가 비정상적으로 누적되는지 탐지하여 경제 왜곡을 사전에 방지합니다.
+
+#### ③ 부정 이용(어뷰징) 방지 알고리즘 도입
+*   **방향**: 동일한 퀘스트를 반복 수행하거나, 시스템의 취약점을 이용해 **재화를 부당하게 얻는 행위를 탐지하는 로직을 강화**합니다.
+*   **효과**: 정당하게 노력하여 재화를 모으는 '성실한 학생 유저'들의 보상 가치를 보호하고, 건전한 경쟁 환경을 조성합니다.
+
+## 💻 FE (Frontend) 주요 기능 및 폴더 구조
+
+### 1. 주요 기능 (Interesthub User)
+
+*   **🚪 랜딩 및 인증**
+    *   로그인/회원가입 모달 진입
+    *   로그인 상태 시 `/dashboard`로 자동 리다이렉트
+*   **📊 대시보드 (메인 RPG UI)**
+    *   탭 기반 메인 화면 제공
+    *   알림 및 프로필 드롭다운 메뉴 지원
+*   **🗺️ 진로 로드맵 & 스킬트리 (스킬 도감)**
+    *   **Gemini AI 기반 학년별(1~4학년) 추천 과목 로드맵 생성 및 표시**
+    *   과목 마스터(이수) 체크를 통한 진행도 및 포인트 계산
+    *   AI 다시 분석 버튼을 통한 강제 재분석 기능 지원
+*   **📜 퀘스트 시스템**
+    *   퀘스트 수락/완료 및 진행도(일일/주간) 관리
+    *   **Gemini 이미지 분석을 통한 퀘스트 인증샷 자동 검증**
+    *   검증 결과 모달(승인/반려) 직관적 표시
+*   **🍻 모험가 선술집 (파티 매칭)**
+    *   파티 생성/신청/수락/거절/추방 기능 및 파티 전용 채팅 모달 지원
+    *   파티 데이터는 로컬 저장소 기반 유틸로 안전하게 관리
+*   **⚒️ 포트폴리오 제련소 (이력서/스펙 인증)**
+    *   프로젝트 및 자격증 설명 작성 + 인증 이미지 업로드
+    *   **Gemini AI로 스펙 검증 후, 프로필 '특이사항'에 누적 저장**
+*   **🃏 운명의 타로 덱 (진로 가챠)**
+    *   코인을 소모하여 랜덤 직업 카드 뽑기 (가챠 시스템)
+    *   카드 도감 수집 및 완성 보상 지급
+*   **💎 재화 시스템 & 상점**
+    *   코인 ↔ 다이아 환전 시스템
+    *   **PortOne API 결제를 통한 다이아 충전 패키지 구매**
+    *   네이버페이 포인트 환급 신청 (최소 20,000원부터 100원 단위 입력)
+    *   신청 내역 상태 조회 (승인대기/완료/거절 등)
+*   **⚙️ 관리자 모드 (환급 승인/거절)**
+    *   관리자 계정 로그인 시에만 '관리자 모드' 탭 활성화
+    *   환급 승인 대기 목록 조회 및 승인/거절(사유 입력) 처리
+
+---
+
+### 2. Frontend 폴더 구조
+
+```text
+Frontend
+├── .env.example
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package.json
+├── package-lock.json
+├── README.md
+├── vercel.json               # SPA 새로고침 rewrites
+├── vite.config.js
+├── public/
+│   └── icons.svg
+└── src/
+    ├── api/
+    │   └── client.js         # API 호출 래퍼/엔드포인트 모음
+    ├── components/
+    │   ├── AdminExchangePanel.jsx # 환급 관리자 UI
+    │   ├── AiPaybackPanel.jsx     # 네이버페이 환급 신청 UI
+    │   ├── CareerCardDetail.jsx
+    │   ├── CareerCollection.jsx
+    │   ├── CareerGachaModal.jsx
+    │   ├── CurrencyShopModal.jsx  # 재화 상점/충전/환급
+    │   ├── GuildTavern.jsx        # 파티 매칭
+    │   ├── LoginModal.jsx
+    │   ├── MapleSkillWindow.jsx   # 스킬트리/로드맵
+    │   ├── NotificationDropdown.jsx
+    │   ├── PartyChatModal.jsx
+    │   ├── PortfolioSmithy.jsx    # 포트폴리오 제련소
+    │   ├── ProfileDropdown.jsx
+    │   ├── ProtectedRoute.jsx
+    │   ├── QuestVerdictModal.jsx
+    │   └── SignupConfirmModal.jsx
+    ├── constants/
+    │   ├── courseCredits.js
+    │   └── profileOptions.js
+    ├── data/
+    │   ├── careerCards.js         # 가챠 카드 데이터
+    │   ├── diaPackages.js         # 다이아 충전 패키지 목록
+    │   ├── paybackCategories.js   # 환급 대상 서비스 목록
+    │   └── questCatalog.js        # 퀘스트 카탈로그/룰
+    ├── pages/
+    │   ├── DashboardPage.jsx      # 메인 대시보드
+    │   ├── MainPage.jsx
+    │   ├── MyPage.jsx
+    │   ├── QuestBoardPage.jsx
+    │   └── SignupPage.jsx
+    ├── services/
+    │   ├── geminiClient.js        # 호출/캐시/쿨다운/중복요청 방지
+    │   ├── geminiConfig.js
+    │   ├── geminiPortfolioVerify.js # 포트폴리오 스펙 검증
+    │   ├── geminiQuestVerify.js   # 퀘스트 이미지 검증
+    │   ├── geminiRoadmap.js       # 로드맵 생성 + 캐시
+    │   └── portonePayment.js      # PortOne 결제 요청
+    ├── utils/
+    │   ├── acceptedQuests.js
+    │   ├── auth.js
+    │   ├── collection.js          # 도감/수집 로직
+    │   ├── currencyExchange.js    # 코인↔다이아 환전
+    │   ├── diamondRefunds.js
+    │   ├── economySync.js
+    │   ├── guildParties.js        # 파티 로컬 저장/조작
+    │   ├── partyChat.js
+    │   ├── paybackDiamond.js      # 환급 다이아 계산
+    │   ├── questConfetti.js
+    │   ├── questManualState.js    # 일일/주간 진행도
+    │   ├── questRewards.js
+    │   ├── resumeProfile.js       # 특이사항/스펙 표시 포맷
+    │   ├── roadmapYears.js
+    │   ├── userEconomy.js         # 재화/보상 상수
+    │   ├── verifiedSpecs.js       # 특이사항 로컬 저장
+    │   └── weeklyQuestProgress.js
+    ├── App.jsx
+    ├── main.jsx
+    └── index.css
 ```
 
-### 클라이언트
+## ⚙️ BE (Backend) 주요 기능 및 폴더 구조
 
-```bash
-cd user
-npm install
-cp .env.example .env
-# VITE_GEMINI_API_KEY, VITE_API_URL 등 설정
-npm run dev
-```
+### 1. 주요 기능 (Interesthub Server)
 
-## 환경 변수
+*   **👤 유저/대시보드 게임 데이터 제공**
+    *   **JWT 기반** 로그인 및 유저 정보 조회/수정
+    *   유저의 핵심 **재화(코인/다이아), 레벨/경험치** 등 게임 상태 데이터 제공
+    *   DB Seed(기본 Course/Quest 데이터) 보장 및 유저별 과목 진행 데이터(`UserCourse`) 동기화
 
-- `user/.env.example` — 프론트엔드 (Gemini API 키 등)
-- `server/.env` — MongoDB URI, JWT 등 (저장소에 커밋하지 마세요)
+*   **🗺️ 로드맵/퀘스트 진행 및 보상 처리**
+    *   과목 로드맵(학년별 과목 리스트 및 상태: LOCKED/AVAILABLE/COMPLETED) 반환
+    *   과목 이수 및 이수 취소 API 제공 (**자동 보상 지급**)
+    *   퀘스트 목록 조회, 완료 처리 및 **보상 지급**
+    *   코인 사용(가챠 등) 트랜잭션 처리
 
-## 배포 (Vercel + Render)
+*   **💰 네이버페이 포인트 환급(Exchange) 시스템 및 관리자 모드**
+    *   유저 환급 신청: 신청 즉시 **다이아 차감** 및 신청 내역(PENDING) 생성
+    *   유저 본인의 환급 신청 내역 실시간 조회 지원
+    *   **관리자 이메일**(`ADMIN_EMAILS`) 기반 보안 적용 (관리자 전용 API 보호)
+        *   승인 대기 목록 조회
+        *   **승인 처리**(COMPLETED)
+        *   **거절 처리**(REJECTED) 및 차감된 **다이아 즉시 환불**
+    *   로컬 MongoDB 환경(standalone)에서도 안전하게 동작하도록 **트랜잭션/롤백 처리 유틸** 포함
 
-| 대상 | 플랫폼 | Root Directory |
-|------|--------|----------------|
-| 프론트 `user/` | Vercel | `user` |
-| API `server/` | Render | `server` |
+---
 
-1. **Render** — Web Service, Start `npm start`, Health `/api/health`, env 5개 (`MONGODB_ATLAS_URL`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `NODE_ENV`, `ADMIN_EMAILS`). 상세: `server/README.md`, 또는 루트 `render.yaml` Blueprint.
-2. **Vercel** — `VITE_API_URL=https://<render-service>.onrender.com/api`, `VITE_GEMINI_API_KEY` 설정 후 Deploy.
-3. Atlas **Network Access** `0.0.0.0/0` 허용.
+### 2. Backend 폴더 구조
 
-프론트 SPA 새로고침: `user/vercel.json` (rewrites → `index.html`).
+```text
+Backend
+├── index.js                  # 서버 진입점 (DB 연결 → HTTP 서버 시작)
+├── package.json
+├── package-lock.json
+├── Procfile                  # web: npm start (배포 플랫폼용)
+├── .env.example
+├── .gitignore
+├── README.md
+└── src/
+    ├── app.js                # Express app 설정 (cors/json/routes/error)
+    ├── index.js              # listen 시작 (Server running 로그)
+    ├── config/
+    │   ├── env.js            # 환경변수 로드 + Mongo URI resolve + 로그
+    │   └── connectMongo.js   # Mongo 연결 + DNS/SRV 이슈 대응
+    ├── controllers/
+    │   ├── authController.js       # 로그인 (JWT 발급)
+    │   ├── userController.js       # 유저 CRUD (기본 REST)
+    │   ├── dashboardController.js  # 대시보드/로드맵/퀘스트/보상 처리
+    │   └── exchangeController.js   # 환급 신청/내역/관리자 승인·거절 API
+    ├── middleware/
+    │   ├── authMiddleware.js       # JWT 인증 검증
+    │   ├── adminMiddleware.js      # 관리자 이메일 화이트리스트 검사
+    │   └── errorHandler.js         # 공통 에러 핸들러
+    ├── models/
+    │   ├── User.js                 # 유저 (레벨/재화/프로필)
+    │   ├── Course.js               # 과목 (로드맵 데이터)
+    │   ├── UserCourse.js           # 유저별 과목 진행도 (LOCKED/AVAILABLE/COMPLETED)
+    │   ├── Quest.js                # 퀘스트 (DAILY/WEEKLY)
+    │   ├── ExchangeHistory.js      # 환급 신청 내역
+    │   └── index.js                # 모델 export 모음
+    ├── routes/
+    │   ├── index.js                # /api 라우터 + /health
+    │   ├── authRoutes.js           # /api/auth/*
+    │   ├── userRoutes.js           # /api/users/*
+    │   ├── dashboardRoutes.js      # /api/dashboard/*
+    │   └── exchangeRoutes.js       # /api/exchanges/* (+ admin)
+    ├── services/
+    │   └── exchangeService.js      # 환급 비즈니스 로직 (다이아 차감/환불/승인/거절)
+    ├── utils/
+    │   ├── generateToken.js        # JWT 생성
+    │   ├── adminEmails.js          # ADMIN_EMAILS 파싱 유틸
+    │   └── mongoTransaction.js     # 트랜잭션 가능 여부 fallback 유틸
+    └── data/
+        └── seedData.js             # 기본 Course/Quest seed 데이터
