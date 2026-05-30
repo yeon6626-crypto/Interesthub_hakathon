@@ -19,7 +19,7 @@
 * **결제**: PortOne Browser SDK (V2)
 * **배포**: Vercel (FE), Render (BE)
 * **작업 환경**: Cursor
-* **배포 주소**: [Interesthub](#)(많은 인원이 들어가면 서버가 불안정해집니다.)
+* **배포 주소**: [[Interesthub](https://interesthub-hakathon.vercel.app/)](#)(많은 인원이 들어가면 서버가 불안정해집니다.)
 
 ## 📄 1) 서비스 기획 의도 및 Pain Point
 
